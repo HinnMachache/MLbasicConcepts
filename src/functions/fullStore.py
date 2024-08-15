@@ -19,3 +19,19 @@ print(f"Employee ID: {salesperson.employee_id}")
 print(f"Salary: {salesperson.salary}")
 print(f"Pants sold: {salesperson.pants_sold}")
 print(f"Total sales: {salesperson.total_sales}")
+
+salesperson.sell_pants(pants_one)
+color = salesperson.pants_sold[0]
+print(f"color: {color}")
+print(f"Pants sold: {salesperson.pants_sold}")
+salesperson.sell_pants(pants_two)
+print(f"Pants sold: {salesperson.pants_sold}")
+salesperson.sell_pants(pants_three)
+print(f"Pants sold: {salesperson.pants_sold}")
+print(len(salesperson.pants_sold))
+# sales = salesperson.calculate_sales()
+# print(f"Sales = {sales}")   # 47.36
+# commission = salesperson.calculate_commission(.1)
+# print(f"Commission: {commission}")  # 4.74
+print("-----------------------------------------------------------")
+salesperson.display_sales()

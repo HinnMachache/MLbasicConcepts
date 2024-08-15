@@ -30,18 +30,18 @@ class SalesPerson:
         Method iterates through `pants_sold` list and
         prints out the xtics of each pair of pants.
         """
-        for i in range(len(self.pants_sold)):
+        for pants in self.pants_sold:
             print(
-                f"color: {self.pants_sold[0]}, waist_size: ${self.pants_sold[1]}, length: {self.pants_sold[2]},"
-                f" price: {self.pants_sold[3]}")
+                f"color: {pants.color}, waist_size: ${pants.waist_size}, length: {pants.length},"
+                f" price: {pants.price}")
 
     def calculate_sales(self) -> float:
         """
         Calculates total sales for the sales person
         :return: float: total sales
         """
-        for i in range(len(self.pants_sold)):
-            self.total_sales += self.pants_sold[3]
+        for pants in self.pants_sold:
+            self.total_sales += pants.price
         return self.total_sales
 
     def calculate_commission(self, percentage: float):
