@@ -51,125 +51,97 @@ class Gaussian:
         self.stdev = deviation
         return self.stdev
 
+    def read_file(self, file_name, sample=True):
+        """
+            Method to read data from a text file. Text file is expected to have numbers.
+            After reading, the file, the mean and standard deviation are calculated.
+        :param file_name:
+                File_name thst contains the data
+        :param sample:
+                Determines whether samples read are data or population data
+        :return:
+                None
+        """
 
-#                 "    def read_data_file(self, file_name, sample=True):\n",
-#                 "    \n",
-#                 "        \"\"\"Method to read in data from a txt file. The txt file should have\n",
-#                 "        one number (float) per line. The numbers are stored in the data attribute. \n",
-#                 "        After reading in the file, the mean and standard deviation are calculated\n",
-#                 "                \n",
-#                 "        Args:\n",
-#                 "            file_name (string): name of a file to read from\n",
-#                 "        \n",
-#                 "        Returns:\n",
-#                 "            None\n",
-#                 "        \n",
-#                 "        \"\"\"\n",
-#                 "        \n",
-#                 "        # This code opens a data file and appends the data to a list called data_list\n",
-#                 "        with open(file_name) as file:\n",
-#                 "            data_list = []\n",
-#                 "            line = file.readline()\n",
-#                 "            while line:\n",
-#                 "                data_list.append(int(line))\n",
-#                 "                line = file.readline()\n",
-#                 "        file.close()\n",
-#                 "    \n",
-#                 "        # TODO: \n",
-#                 "        #   Update the self.data attribute with the data_list\n",
-#                 "        #   Update self.mean with the mean of the data_list. \n",
-#                 "        #       You can use the calculate_mean() method with self.calculate_mean()\n",
-#                 "        #   Update self.stdev with the standard deviation of the data_list. Use the \n",
-#                 "        #       calcaulte_stdev() method.\n",
-#                 "                \n",
-#                 "        \n",
-#                 "    def plot_histogram(self):\n",
-#                 "        \"\"\"Method to output a histogram of the instance variable data using \n",
-#                 "        matplotlib pyplot library.\n",
-#                 "        \n",
-#                 "        Args:\n",
-#                 "            None\n",
-#                 "            \n",
-#                 "        Returns:\n",
-#                 "            None\n",
-#                 "        \"\"\"\n",
-#                 "        \n",
-#                 "        # TODO: Plot a histogram of the data_list using the matplotlib package.\n",
-#                 "        #       Be sure to label the x and y axes and also give the chart a title\n",
-#                 "        \n",
-#                 "                \n",
-#                 "        \n",
-#                 "    def pdf(self, x):\n",
-#                 "        \"\"\"Probability density function calculator for the gaussian distribution.\n",
-#                 "        \n",
-#                 "        Args:\n",
-#                 "            x (float): point for calculating the probability density function\n",
-#                 "            \n",
-#                 "        \n",
-#                 "        Returns:\n",
-#                 "            float: probability density function output\n",
-#                 "        \"\"\"\n",
-#                 "        \n",
-#                 "        # TODO: Calculate the probability density function of the Gaussian distribution\n",
-#                 "        #       at the value x. You'll need to use self.stdev and self.mean to do the calculation\n",
-#                 "        pass        \n",
-#                 "\n",
-#                 "    def plot_histogram_pdf(self, n_spaces = 50):\n",
-#                 "\n",
-#                 "        \"\"\"Method to plot the normalized histogram of the data and a plot of the \n",
-#                 "        probability density function along the same range\n",
-#                 "        \n",
-#                 "        Args:\n",
-#                 "            n_spaces (int): number of data points \n",
-#                 "        \n",
-#                 "        Returns:\n",
-#                 "            list: x values for the pdf plot\n",
-#                 "            list: y values for the pdf plot\n",
-#                 "            \n",
-#                 "        \"\"\"\n",
-#                 "        \n",
-#                 "        #TODO: Nothing to do for this method. Try it out and see how it works.\n",
-#                 "        \n",
-#                 "        mu = self.mean\n",
-#                 "        sigma = self.stdev\n",
-#                 "\n",
-#                 "        min_range = min(self.data)\n",
-#                 "        max_range = max(self.data)\n",
-#                 "        \n",
-#                 "         # calculates the interval between x values\n",
-#                 "        interval = 1.0 * (max_range - min_range) / n_spaces\n",
-#                 "\n",
-#                 "        x = []\n",
-#                 "        y = []\n",
-#                 "        \n",
-#                 "        # calculate the x values to visualize\n",
-#                 "        for i in range(n_spaces):\n",
-#                 "            tmp = min_range + interval*i\n",
-#                 "            x.append(tmp)\n",
-#                 "            y.append(self.pdf(tmp))\n",
-#                 "\n",
-#                 "        # make the plots\n",
-#                 "        fig, axes = plt.subplots(2,sharex=True)\n",
-#                 "        fig.subplots_adjust(hspace=.5)\n",
-#                 "        axes[0].hist(self.data, density=True)\n",
-#                 "        axes[0].set_title('Normed Histogram of Data')\n",
-#                 "        axes[0].set_ylabel('Density')\n",
-#                 "\n",
-#                 "        axes[1].plot(x, y)\n",
-#                 "        axes[1].set_title('Normal Distribution for \\n Sample Mean and Sample Standard Deviation')\n",
-#                 "        axes[0].set_ylabel('Density')\n",
-#                 "        plt.show()\n",
-#                 "\n",
-#                 "        return x, y"
-#             ]
-#         },
-#         {
-#             "cell_type": "code",
-#             "execution_count": null,
-#             "metadata": {
-#
-#             },
-#             "outputs": [
+        with open(file_name) as file:
+            data_list = []
+            line = file.readline()
+            while line:
+                data_list.append(line)
+                line = file.readline()
+        file.close()
+
+        self.data = data_list  # Update self.data with the data list
+        self.mean = self.calculate_mean()  # Update self.mean with the mean of the data list
+        self.stdev = self.calculate_stdev(sample)  # Update self.sdtdev with standard dev of the data list
+
+    def plot_histogram(self):
+        """
+        Method to output a histogram of the instance variable data using
+        matplotlib pyplot library
+        :return:
+            None
+        """
+        # TODO: Plot a histogram of the data_list using the matplotlib package.
+        plt.plot(self.data)
+        plt.title("Histogram of Data")
+        plt.xlabel("Value")
+        plt.ylabel("Frequency")
+        plt.show()
+
+    def pdf(self, x):
+        """
+        Probability density function calculator for the gaussian distribution.
+        Args:
+            (float): point for calculating the probability density function
+        Returns:
+            float: probability density function output
+        """
+        # Calculate the probability density function of the Gaussian distribution
+        mu = self.mean
+        sigma = self.stdev
+        return (1 / math.sqrt(2 * math.pi * sigma ** 2)) * (math.e ** (-((x - mu) ** 2) / (2 * sigma ** 2)))
+
+    def plot_histogram_pdf(self, n_spaces=50):
+        """
+        Method to plot the normalized histogram of the data and a plot of the
+        probability density function along the same range
+        :param self:
+                Object
+        :param n_spaces:
+                Number of data points
+        :return:
+                list: x values for the pdf plot
+                list: y values for the pdf plot
+        """
+        mu = self.mean
+        sigma = self.stdev
+
+        min_range = min(self.data)
+        max_range = max(self.data)
+
+        # calculates the interval between x values
+        interval = 1.0 * (max_range - min_range) / n_spaces
+        x = []
+        y = []
+        # calculate the x values to visualize
+        for i in range(n_spaces):
+            tmp = min_range + interval * i
+            x.append(tmp)
+            y.append(self.pdf(tmp))
+
+        # make the plots
+        fig, axes = plt.subplots(2, sharex=True)
+        fig.subplots_adjust(hspace=.5)
+        axes[0].set_title('Normed Histogram of Data')
+        axes[0].set_ylabel('Density')
+        axes[1].plot(x, y)
+        axes[1].set_title('Normal Distribution for \n Sample Mean and Sample Standard Deviation')
+        axes[0].set_ylabel('Density')
+        plt.show()
+
+        return x, y
+
 #
 #             ],
 #             "source": [
