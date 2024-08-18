@@ -67,7 +67,7 @@ class Gaussian:
             data_list = []
             line = file.readline()
             while line:
-                data_list.append(line)
+                data_list.append(int(line))
                 line = file.readline()
         file.close()
 
@@ -100,7 +100,8 @@ class Gaussian:
         # Calculate the probability density function of the Gaussian distribution
         mu = self.mean
         sigma = self.stdev
-        return (1 / math.sqrt(2 * math.pi * sigma ** 2)) * (math.e ** (-((x - mu) ** 2) / (2 * sigma ** 2)))
+        # return (1 / math.sqrt(2 * math.pi * sigma ** 2)) * (math.e ** (-((x - mu) ** 2) / (2 * sigma ** 2)))
+        return (1.0 / (self.stdev * math.sqrt(2 * math.pi))) * math.exp(-0.5 * ((x - self.mean) / self.stdev) ** 2)
 
     def plot_histogram_pdf(self, n_spaces=50):
         """
@@ -141,6 +142,26 @@ class Gaussian:
         plt.show()
 
         return x, y
+
+    def __add__(self, other):
+        """
+
+        :param other:
+            Other class
+        :return:
+        """
+        result = Gaussian()
+        result.mean = self.mean + other.mean
+        result.stdev = math.sqrt(self.stdev ** 2 + other.stdev ** 2)
+
+        return result
+
+    def __repr__(self):
+        """
+        fxReturn String format required
+        :return:
+        """
+        return f"Mean {self.mean}, standard deviation {self.stdev}"
 
 #
 #             ],
